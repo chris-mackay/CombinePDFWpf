@@ -1,0 +1,26 @@
+﻿<Window x:Name="MainForm" x:Class="CombinePDFWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CombinePDFWpf"
+        mc:Ignorable="d"
+        Title="Combine PDF" Height="674" Width="590.670" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" BorderThickness="0" Loaded="MainForm_Loaded">
+    <Grid>
+        <Label x:Name="lblInstructions" Content="Specifying a directory will load all PDF files for the directory.&#xD;&#xA;Not including sub-directories." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="47"/>
+        <Label x:Name="lblDirectory" Content="File Directory" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDirectory" HorizontalAlignment="Left" Height="23" Margin="94,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="467"/>
+        <CheckBox x:Name="ckbDefault" Content="Set directory as default" HorizontalAlignment="Left" Margin="94,112,0,0" VerticalAlignment="Top" Width="149"/>
+        <Button x:Name="btnBrowse" Content="Browse" HorizontalAlignment="Left" Margin="486,113,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="btnBrowse_Click"/>
+        <Button x:Name="btnAdd" Content="Add File" HorizontalAlignment="Left" Margin="16,170,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnRemove" Content="Remove File" HorizontalAlignment="Left" Margin="96,170,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnDelete" Content="Delete File" HorizontalAlignment="Left" Margin="176,170,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="486,170,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="384" Margin="16,200,0,0" VerticalAlignment="Top" Width="545"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Margin="486,598,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnCombine" Content="Combine" HorizontalAlignment="Left" Margin="406,598,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnMoveDown" Content="Move Down" HorizontalAlignment="Left" Margin="287,598,0,0" VerticalAlignment="Top" Width="98" Height="25"/>
+        <Button x:Name="btnMoveup" Content="Move Up" HorizontalAlignment="Left" Margin="184,598,0,0" VerticalAlignment="Top" Width="98" Height="25"/>
+        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="16,598,0,0" VerticalAlignment="Top" Width="144" Height="25"/>
+    </Grid>
+</Window>
