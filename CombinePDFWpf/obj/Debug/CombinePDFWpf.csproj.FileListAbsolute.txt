@@ -21,3 +21,5 @@ C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\Microsoft.WindowsAPICodePac
 C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\XMLSettings.pdb
 C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\CombinePDFWpf.csproj.CopyComplete
 C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\PdfSharp.dll
+C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\frmInput.g.cs
+C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\frmInput.baml

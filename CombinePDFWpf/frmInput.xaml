@@ -1,0 +1,56 @@
+﻿<Window x:Class="CombinePDFWpf.frmInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CombinePDFWpf"
+        mc:Ignorable="d"
+        Title="Combine PDF" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    
+    <Grid Margin="15">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1">
+    
+            <Label Content="Combined file name"
+                   x:Name="lblPrompt"
+                   HorizontalAlignment="Left">
+            </Label>
+            
+            <TextBox Width="200"
+                     x:Name="txtInput"
+                     HorizontalAlignment="Left">
+            </TextBox>
+
+        </StackPanel>
+
+        <WrapPanel Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Right">
+            <Button
+                x:Name="btnOK"
+                Content="OK"
+                Width="75"
+                Height="25" IsDefault="True">
+            </Button>
+
+            <Button
+                x:Name="btnCancel"
+                Content="Cancel"
+                Margin="10,0,0,0"
+                Width="75"
+                Height="25" IsCancel="True">
+            </Button>
+
+        </WrapPanel>
+        
+    </Grid>
+    
+</Window>
