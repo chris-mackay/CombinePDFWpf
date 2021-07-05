@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DialogMessage;
+using System.Windows.Forms;
 using System.Diagnostics;
 using Microsoft.Win32;
 
@@ -135,14 +137,11 @@ namespace CombinePDFWpf
             }
             else
             {
-                TaskDialog tdSpecifyDirectory = new TaskDialog();
-                tdSpecifyDirectory.Caption = "Combine PDF";
-                tdSpecifyDirectory.Icon = TaskDialogStandardIcon.Information;
-                tdSpecifyDirectory.StandardButtons = TaskDialogStandardButtons.Ok;
-                tdSpecifyDirectory.InstructionText = "No directory specified";
-                tdSpecifyDirectory.Text = "Click Browse to specify a directory before refreshing";
-
-                tdSpecifyDirectory.Show();
+                DMessage.ShowMessage("Combine PDF", 
+                                     "No directory specified", 
+                                     DMessage.MsgButtons.OK, 
+                                     DMessage.MsgIcons.Info, 
+                                     "Click Browse to specify a directory before refreshing");
             }
         }
 
@@ -184,12 +183,11 @@ namespace CombinePDFWpf
         {
             if (lstFiles.Items.Count > 1)
             {
-                TaskDialog tdConfirm = new TaskDialog();
-                tdConfirm.Caption = "Combine PDF";
-                tdConfirm.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                tdConfirm.InstructionText = "Are you sure you want to combine the files?";
-
-                if (tdConfirm.Show() == TaskDialogResult.Yes)
+                if (DMessage.ShowMessage("Combine PDF",
+                     "Are you sure you want to combine the files?",
+                     DMessage.MsgButtons.YesNo,
+                     DMessage.MsgIcons.None,
+                     "") == System.Windows.Forms.DialogResult.Yes)
                 {
                     PdfDocument outputDocument = new PdfDocument();
                     string dir = txtDirectory.Text;
@@ -207,28 +205,24 @@ namespace CombinePDFWpf
                     }
 
                     frmInput input = new frmInput();
-                    input.lblPrompt.Content = "Enter the name of the combined file";
+                    input.lblPrompt.Content = "Combined file name";
                     input.Title = "Combine PDF";
-                    bool? result = input.ShowDialog();
+                    input.ShowDialog();
 
-                    if (result == true)
+                    if (input.DialogResult.HasValue && input.DialogResult.Value)
                     {
                         string name = input.txtInput.Text + ".pdf";
                         string filename = System.IO.Path.Combine(dir, name);
-
-                        TaskDialog tdOpen = new TaskDialog();
-                        tdOpen.Caption = "Combine PDF";
-                        tdOpen.Icon = TaskDialogStandardIcon.Information;
-                        tdOpen.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                        tdOpen.InstructionText = "Files have been combined successfully";
-                        tdOpen.Text = "Would you like the open the combined file now?";
-                        tdOpen.FooterText = filename;
 
                         if (!File.Exists(filename))
                         {
                             outputDocument.Save(filename);
 
-                            if (tdOpen.Show() == TaskDialogResult.Yes)
+                            if (DMessage.ShowMessage("Combine PDF",
+                                                     "Files have been combined successfully",
+                                                     DMessage.MsgButtons.YesNo,
+                                                     DMessage.MsgIcons.Info,
+                                                     "Would you like the open the combined file now?") == System.Windows.Forms.DialogResult.Yes)
                             {
                                 Process.Start(filename);
                             }
@@ -242,38 +236,33 @@ namespace CombinePDFWpf
                                 File.Delete(filename);
                                 outputDocument.Save(filename);
 
-                                if (tdOpen.Show() == TaskDialogResult.Yes)
+                                if (DMessage.ShowMessage("Combine PDF",
+                                                     "Files have been combined successfully",
+                                                     DMessage.MsgButtons.YesNo,
+                                                     DMessage.MsgIcons.Info,
+                                                     "Would you like the open the combined file now?") == System.Windows.Forms.DialogResult.Yes)
                                 {
                                     Process.Start(filename);
                                 }
                             }
                             else
                             {
-                                TaskDialog tdFileExists = new TaskDialog();
-                                tdFileExists.Caption = "Combine PDF";
-                                tdFileExists.Icon = TaskDialogStandardIcon.Warning;
-                                tdFileExists.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                                tdFileExists.InstructionText = "File already exists in this location";
-                                tdFileExists.Text = "Overwrite file?";
-                                tdFileExists.FooterText = filename;
-                                tdFileExists.FooterCheckBoxText = "Always Overwrite?";
-                                tdFileExists.FooterCheckBoxChecked = false;
 
-                                if (tdFileExists.Show() == TaskDialogResult.Yes)
+                                if (DMessage.ShowMessage("Combine PDF",
+                                                     "A file with the provided name already exists in this location",
+                                                     DMessage.MsgButtons.YesNo,
+                                                     DMessage.MsgIcons.Info,
+                                                     "Do you want to overwrite the file?") == System.Windows.Forms.DialogResult.Yes)
                                 {
-                                    if (tdFileExists.FooterCheckBoxChecked.Value)
-                                    {
-                                        XMLSettings.SetSettingsValue("AlwaysOverwrite", "true");
-                                    }
-                                    else
-                                    {
-                                        XMLSettings.SetSettingsValue("AlwaysOverwrite", "false");
-                                    }
 
                                     File.Delete(filename);
                                     outputDocument.Save(filename);
 
-                                    if (tdOpen.Show() == TaskDialogResult.Yes)
+                                    if (DMessage.ShowMessage("Combine PDF",
+                                                     "Files have been combined successfully",
+                                                     DMessage.MsgButtons.YesNo,
+                                                     DMessage.MsgIcons.Info,
+                                                     "Would you like the open the combined file now?") == System.Windows.Forms.DialogResult.Yes)
                                     {
                                         Process.Start(filename);
                                     }
@@ -292,15 +281,11 @@ namespace CombinePDFWpf
                 string selectedFile = lstFiles.SelectedItem.ToString();
                 int index = lstFiles.SelectedIndex;
 
-                TaskDialog td = new TaskDialog();
-                td.Caption = "Combine PDF";
-                td.Icon = TaskDialogStandardIcon.Warning;
-                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                td.InstructionText = "Are you sure you want to delete the selected file?";
-                td.Text = "THE FILE WILL BE PERMANENTLY DELETED FROM YOUR COMPUTER";
-                td.FooterText = selectedFile;
-
-                if (td.Show() == TaskDialogResult.Yes)
+                if (DMessage.ShowMessage("Combine PDF",
+                                         "Are you sure you want to delete the selected file?",
+                                         DMessage.MsgButtons.YesNo,
+                                         DMessage.MsgIcons.Warning,
+                                         "THE FILE WILL BE PERMANENTLY DELETED FROM YOUR COMPUTER\n\n" + selectedFile) == System.Windows.Forms.DialogResult.Yes)
                 {
                     File.Delete(selectedFile);
                     lstFiles.Items.RemoveAt(index);
@@ -315,14 +300,11 @@ namespace CombinePDFWpf
                 string selectedFile = lstFiles.SelectedItem.ToString();
                 int index = lstFiles.SelectedIndex;
 
-                TaskDialog td = new TaskDialog();
-                td.Caption = "Combine PDF";
-                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                td.InstructionText = "Are you sure you want to remove the selected file from the list?";
-                td.Text = "This will not delete the actual file";
-                td.FooterText = selectedFile;
-
-                if (td.Show() == TaskDialogResult.Yes)
+                if (DMessage.ShowMessage("Combine PDF",
+                                         "Are you sure you want to remove the selected file from the list?",
+                                         DMessage.MsgButtons.YesNo,
+                                         DMessage.MsgIcons.None,
+                                         "This will not delete the actual file\n\n" + selectedFile) == System.Windows.Forms.DialogResult.Yes)
                 {
                     lstFiles.Items.RemoveAt(index);
                 }
@@ -331,13 +313,12 @@ namespace CombinePDFWpf
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
             ofd.Title = "Select a file to add";
             ofd.Filter = "PDF files (*.pdf)|*.pdf";
             ofd.InitialDirectory = XMLSettings.GetSettingsValue("DefaultDirectory");
-            bool? result = ofd.ShowDialog();
 
-            if (result == true)
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string file = ofd.FileName;
 
@@ -347,14 +328,11 @@ namespace CombinePDFWpf
                 }
                 else
                 {
-                    TaskDialog tdFileExists = new TaskDialog();
-                    tdFileExists.Caption = "Combine PDF";
-                    tdFileExists.Icon = TaskDialogStandardIcon.Warning;
-                    tdFileExists.StandardButtons = TaskDialogStandardButtons.Ok;
-                    tdFileExists.InstructionText = "File already exists in this list";
-                    tdFileExists.FooterText = file;
-
-                    tdFileExists.Show();
+                    DMessage.ShowMessage("Combine PDF",
+                                         "File already exists in this list",
+                                         DMessage.MsgButtons.OK,
+                                         DMessage.MsgIcons.Warning,
+                                         file);
                 }
             }
         }

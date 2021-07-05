@@ -38,7 +38,7 @@
                 x:Name="btnOK"
                 Content="OK"
                 Width="75"
-                Height="25" IsDefault="True">
+                Height="25" IsDefault="True" Click="btnOK_Click">
             </Button>
 
             <Button
@@ -46,7 +46,7 @@
                 Content="Cancel"
                 Margin="10,0,0,0"
                 Width="75"
-                Height="25" IsCancel="True">
+                Height="25" IsCancel="True" Click="btnCancel_Click">
             </Button>
 
         </WrapPanel>
