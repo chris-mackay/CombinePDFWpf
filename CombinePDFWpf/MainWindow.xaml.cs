@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DialogMessage;
-using System.Windows.Forms;
 using System.Diagnostics;
-using Microsoft.Win32;
 
 namespace CombinePDFWpf
 {
@@ -31,6 +17,8 @@ namespace CombinePDFWpf
         public MainWindow()
         {
             InitializeComponent();
+            this.Height = SystemParameters.PrimaryScreenHeight * 0.95;
+            this.Width = SystemParameters.PrimaryScreenWidth * 0.95;
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -138,6 +126,7 @@ namespace CombinePDFWpf
             else
             {
                 TaskDialog tdSpecifyDirectory = new TaskDialog();
+                tdSpecifyDirectory.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                 tdSpecifyDirectory.Caption = "Combine PDF";
                 tdSpecifyDirectory.Icon = TaskDialogStandardIcon.Information;
                 tdSpecifyDirectory.StandardButtons = TaskDialogStandardButtons.Ok;
@@ -187,6 +176,7 @@ namespace CombinePDFWpf
             if (lstFiles.Items.Count > 1)
             {
                 TaskDialog tdConfirm = new TaskDialog();
+                tdConfirm.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                 tdConfirm.Caption = "Combine PDF";
                 tdConfirm.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
                 tdConfirm.InstructionText = "Are you sure you want to combine the files?";
@@ -209,6 +199,7 @@ namespace CombinePDFWpf
                     }
 
                     frmInput input = new frmInput();
+                    input.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     input.lblPrompt.Content = "Combined file name";
                     input.Title = "Combine PDF";
                     bool? result = input.ShowDialog();
@@ -219,6 +210,7 @@ namespace CombinePDFWpf
                         string filename = System.IO.Path.Combine(dir, name);
 
                         TaskDialog tdOpen = new TaskDialog();
+                        tdOpen.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                         tdOpen.Caption = "Combine PDF";
                         tdOpen.Icon = TaskDialogStandardIcon.Information;
                         tdOpen.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
@@ -252,6 +244,7 @@ namespace CombinePDFWpf
                             else
                             {
                                 TaskDialog tdFileExists = new TaskDialog();
+                                tdFileExists.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                                 tdFileExists.Caption = "Combine PDF";
                                 tdFileExists.Icon = TaskDialogStandardIcon.Warning;
                                 tdFileExists.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
@@ -288,6 +281,7 @@ namespace CombinePDFWpf
             else
             {
                 TaskDialog tdAddFiles = new TaskDialog();
+                tdAddFiles.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                 tdAddFiles.Caption = "Combine PDF";
                 tdAddFiles.Icon = TaskDialogStandardIcon.Warning;
                 tdAddFiles.StandardButtons = TaskDialogStandardButtons.Ok;
@@ -306,6 +300,7 @@ namespace CombinePDFWpf
                 int index = lstFiles.SelectedIndex;
 
                 TaskDialog td = new TaskDialog();
+                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                 td.Caption = "Combine PDF";
                 td.Icon = TaskDialogStandardIcon.Warning;
                 td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
@@ -329,6 +324,7 @@ namespace CombinePDFWpf
                 int index = lstFiles.SelectedIndex;
 
                 TaskDialog td = new TaskDialog();
+                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                 td.Caption = "Combine PDF";
                 td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
                 td.InstructionText = "Are you sure you want to remove the selected file from the list?";
@@ -362,6 +358,7 @@ namespace CombinePDFWpf
                 else
                 {
                     TaskDialog tdFileExists = new TaskDialog();
+                    tdFileExists.StartupLocation = TaskDialogStartupLocation.CenterOwner;
                     tdFileExists.Caption = "Combine PDF";
                     tdFileExists.Icon = TaskDialogStandardIcon.Warning;
                     tdFileExists.StandardButtons = TaskDialogStandardButtons.Ok;
