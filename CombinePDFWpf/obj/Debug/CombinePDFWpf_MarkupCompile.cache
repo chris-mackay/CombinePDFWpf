@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Release\
+C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\
 CombinePDFWpf
 none
 false
-TRACE
+DEBUG;TRACE
 C:\Programming\CombinePDFWpf\CombinePDFWpf\App.xaml
 21628896926
 

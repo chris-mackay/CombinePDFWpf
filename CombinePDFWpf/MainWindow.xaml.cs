@@ -9,16 +9,42 @@ using System.Diagnostics;
 
 namespace CombinePDFWpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            this.Height = SystemParameters.PrimaryScreenHeight * 0.95;
-            this.Width = SystemParameters.PrimaryScreenWidth * 0.95;
+        }
+
+        #region Events
+
+        private void MainForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+
+            settings.Add("DefaultDirectory", "");
+            settings.Add("AlwaysOverwrite", "False");
+
+            XMLSettings.AppSettingsFile = "Settings.xml";
+            XMLSettings.InitializeSettings(settings);
+
+            string dir = XMLSettings.GetSettingsValue("DefaultDirectory");
+            txtDirectory.Text = dir;
+            txtDirectory.Select(dir.Length + 1, 0);
+
+            bool isChecked = DrawingDirectoryIsDefault(dir);
+            ckbDefault.IsChecked = isChecked;
+
+            if (isChecked)
+            {
+                lstFiles.Items.Clear();
+
+                string[] files = Files(dir);
+                foreach (string file in files)
+                {
+                    lstFiles.Items.Add(file);
+                }
+            }
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -53,56 +79,80 @@ namespace CombinePDFWpf
             }
         }
 
-        private string[] Files(string dir)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            string[] fInfos = Directory.GetFiles(dir, "*.pdf", SearchOption.TopDirectoryOnly);
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
 
-            return fInfos;
-        }
+            ofd.Title = "Select a file to add";
+            ofd.Filter = "PDF files (*.pdf)|*.pdf";
+            ofd.InitialDirectory = XMLSettings.GetSettingsValue("DefaultDirectory");
+            bool? result = ofd.ShowDialog();
 
-        private bool DrawingDirectoryIsDefault(string dir)
-        {
-            bool flag = false;
-            dir = txtDirectory.Text;
-
-            string savedDir = XMLSettings.GetSettingsValue("DefaultDirectory");
-
-            if (dir != string.Empty && System.IO.Directory.Exists(dir))
+            if ((bool)result)
             {
-                if (dir == savedDir)
-                    flag = true;
-                else
-                    flag = false;
-            }
+                string file = ofd.FileName;
 
-            return flag;
-        }
-
-        private void MainForm_Loaded(object sender, RoutedEventArgs e)
-        {
-            Dictionary<string, string> settings = new Dictionary<string, string>();
-
-            settings.Add("DefaultDirectory", "");
-            settings.Add("AlwaysOverwrite", "False");
-
-            XMLSettings.AppSettingsFile = "Settings.xml";
-            XMLSettings.InitializeSettings(settings);
-
-            string dir = XMLSettings.GetSettingsValue("DefaultDirectory");
-            txtDirectory.Text = dir;
-            txtDirectory.Select(dir.Length + 1, 0);
-
-            bool isChecked = DrawingDirectoryIsDefault(dir);
-            ckbDefault.IsChecked = isChecked;
-
-            if (isChecked)
-            {
-                lstFiles.Items.Clear();
-
-                string[] files = Files(dir);
-                foreach (string file in files)
+                if (!lstFiles.Items.Contains(file))
                 {
-                    lstFiles.Items.Add(file);
+                    lstFiles.Items.Add(ofd.FileName);
+                }
+                else
+                {
+                    TaskDialog tdFileExists = new TaskDialog();
+                    tdFileExists.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                    tdFileExists.Caption = "Combine PDF";
+                    tdFileExists.Icon = TaskDialogStandardIcon.Warning;
+                    tdFileExists.StandardButtons = TaskDialogStandardButtons.Ok;
+                    tdFileExists.InstructionText = "File already exists in this list";
+                    tdFileExists.FooterText = file;
+
+                    tdFileExists.Show();
+                }
+            }
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstFiles.SelectedItems.Count > 0)
+            {
+                string selectedFile = lstFiles.SelectedItem.ToString();
+                int index = lstFiles.SelectedIndex;
+
+                TaskDialog td = new TaskDialog();
+                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                td.Caption = "Combine PDF";
+                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                td.InstructionText = "Are you sure you want to remove the selected file from the list?";
+                td.Text = "This will not delete the actual file";
+                td.FooterText = selectedFile;
+
+                if (td.Show() == TaskDialogResult.Yes)
+                {
+                    lstFiles.Items.RemoveAt(index);
+                }
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstFiles.SelectedItems.Count > 0)
+            {
+                string selectedFile = lstFiles.SelectedItem.ToString();
+                int index = lstFiles.SelectedIndex;
+
+                TaskDialog td = new TaskDialog();
+                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                td.Caption = "Combine PDF";
+                td.Icon = TaskDialogStandardIcon.Warning;
+                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                td.InstructionText = "Are you sure you want to delete the selected file?";
+                td.Text = "THE FILE WILL BE PERMANENTLY DELETED FROM YOUR COMPUTER";
+                td.FooterText = selectedFile;
+
+                if (td.Show() == TaskDialogResult.Yes)
+                {
+                    File.Delete(selectedFile);
+                    lstFiles.Items.RemoveAt(index);
                 }
             }
         }
@@ -135,11 +185,6 @@ namespace CombinePDFWpf
 
                 tdSpecifyDirectory.Show();
             }
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void btnMoveDown_Click(object sender, RoutedEventArgs e)
@@ -292,82 +337,9 @@ namespace CombinePDFWpf
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (lstFiles.SelectedItems.Count > 0)
-            {
-                string selectedFile = lstFiles.SelectedItem.ToString();
-                int index = lstFiles.SelectedIndex;
-
-                TaskDialog td = new TaskDialog();
-                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
-                td.Caption = "Combine PDF";
-                td.Icon = TaskDialogStandardIcon.Warning;
-                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                td.InstructionText = "Are you sure you want to delete the selected file?";
-                td.Text = "THE FILE WILL BE PERMANENTLY DELETED FROM YOUR COMPUTER";
-                td.FooterText = selectedFile;
-
-                if (td.Show() == TaskDialogResult.Yes)
-                {
-                    File.Delete(selectedFile);
-                    lstFiles.Items.RemoveAt(index);
-                }
-            }
-        }
-
-        private void btnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            if (lstFiles.SelectedItems.Count > 0)
-            {
-                string selectedFile = lstFiles.SelectedItem.ToString();
-                int index = lstFiles.SelectedIndex;
-
-                TaskDialog td = new TaskDialog();
-                td.StartupLocation = TaskDialogStartupLocation.CenterOwner;
-                td.Caption = "Combine PDF";
-                td.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                td.InstructionText = "Are you sure you want to remove the selected file from the list?";
-                td.Text = "This will not delete the actual file";
-                td.FooterText = selectedFile;
-
-                if (td.Show() == TaskDialogResult.Yes)
-                {
-                    lstFiles.Items.RemoveAt(index);
-                }
-            }
-        }
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-
-            ofd.Title = "Select a file to add";
-            ofd.Filter = "PDF files (*.pdf)|*.pdf";
-            ofd.InitialDirectory = XMLSettings.GetSettingsValue("DefaultDirectory");
-            bool? result = ofd.ShowDialog();
-
-            if ((bool)result)
-            {
-                string file = ofd.FileName;
-
-                if (!lstFiles.Items.Contains(file))
-                {
-                    lstFiles.Items.Add(ofd.FileName);
-                }
-                else
-                {
-                    TaskDialog tdFileExists = new TaskDialog();
-                    tdFileExists.StartupLocation = TaskDialogStartupLocation.CenterOwner;
-                    tdFileExists.Caption = "Combine PDF";
-                    tdFileExists.Icon = TaskDialogStandardIcon.Warning;
-                    tdFileExists.StandardButtons = TaskDialogStandardButtons.Ok;
-                    tdFileExists.InstructionText = "File already exists in this list";
-                    tdFileExists.FooterText = file;
-
-                    tdFileExists.Show();
-                }
-            }
+            this.Close();
         }
 
         private void txtDirectory_TextChanged(object sender, TextChangedEventArgs e)
@@ -398,5 +370,36 @@ namespace CombinePDFWpf
                     ckbDefault.IsEnabled = false;
                 }
         }
+
+        #endregion
+
+        #region HelperMethods
+
+        private string[] Files(string dir)
+        {
+            string[] fInfos = Directory.GetFiles(dir, "*.pdf", SearchOption.TopDirectoryOnly);
+
+            return fInfos;
+        }
+
+        private bool DrawingDirectoryIsDefault(string dir)
+        {
+            bool flag = false;
+            dir = txtDirectory.Text;
+
+            string savedDir = XMLSettings.GetSettingsValue("DefaultDirectory");
+
+            if (dir != string.Empty && System.IO.Directory.Exists(dir))
+            {
+                if (dir == savedDir)
+                    flag = true;
+                else
+                    flag = false;
+            }
+
+            return flag;
+        }
+
+        #endregion
     }
 }
