@@ -31,7 +31,8 @@
                HorizontalAlignment="Left"
                Grid.Row="1"
                VerticalAlignment="Top" 
-               Height="47"/>
+               Height="47"
+               Margin="0,0,0,20"/>
 
         <WrapPanel Grid.Row="2">
             

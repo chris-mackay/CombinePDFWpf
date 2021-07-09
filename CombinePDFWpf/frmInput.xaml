@@ -23,10 +23,13 @@
     
             <Label Content="Combined file name"
                    x:Name="lblPrompt"
-                   HorizontalAlignment="Left">
+                   HorizontalAlignment="Left"
+                   Margin="0,0,0,10"
+                   Padding="0,0,0,0">
+                    
             </Label>
             
-            <TextBox Width="200"
+            <TextBox Width="300"
                      x:Name="txtInput"
                      HorizontalAlignment="Left">
             </TextBox>
