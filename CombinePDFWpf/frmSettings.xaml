@@ -1,0 +1,64 @@
+﻿<Window x:Class="CombinePDFWpf.frmSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CombinePDFWpf"
+        mc:Ignorable="d"
+        Title="Settings" 
+        SizeToContent="WidthAndHeight" Icon="combine_pdf.ico" ResizeMode="NoResize" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" 
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,20">
+
+            <Label Content="Default file directory" FontWeight="Bold"></Label>
+            <Label Content="Choose the preferred default file directory&#x0a;to load PDF files from"></Label>
+            
+        </StackPanel>
+
+        <WrapPanel Grid.Row="2" 
+                   HorizontalAlignment="Left"
+                   Margin="0,0,0,30">
+
+            <Label Content="File Directory"></Label>
+            <TextBox x:Name="txtDirectory" Width="300" TextChanged="txtDirectory_TextChanged"></TextBox>
+            <Button x:Name="btnBrowse" Content="Browse"
+                    Width="75" Height="25" Click="btnBrowse_Click"
+                    Margin="10,0,0,0">
+            </Button>
+
+        </WrapPanel>
+
+        <StackPanel Grid.Row="3" 
+                    HorizontalAlignment="Left">
+
+            <Label Content="Always Overwrite" FontWeight="Bold" Margin="0,0,0,10"></Label>
+            <Label Content="Choose whether you recieve a message that there&#x0a;is already a file with the name that was provided."></Label>
+            <Label Content="Checking will not show the message and always&#x0a;overwrite the file."></Label>
+            <Label Content="Un-checking will show the confirmation message."></Label>
+            <CheckBox x:Name="ckbAlwaysOverwrite" Content="Always Overwrite?" Margin="0,20,0,0"></CheckBox>
+            
+        </StackPanel>
+
+        <WrapPanel Grid.Row="4" 
+                   HorizontalAlignment="Right"
+                   Margin="0,20,0,0">
+            <Button x:Name="btnSave" Content="Save" Width="75" Height="25" Click="btnSave_Click"></Button>
+            <Button x:Name="btnClose" Content="Close" Width="75" Height="25" Click="btnClose_Click" Margin="10,0,0,0"></Button>
+        </WrapPanel>
+        
+    </Grid>
+</Window>

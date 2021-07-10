@@ -31,7 +31,7 @@
             
             <TextBox Width="300"
                      x:Name="txtInput"
-                     HorizontalAlignment="Left">
+                     HorizontalAlignment="Left" Height="25">
             </TextBox>
 
         </StackPanel>

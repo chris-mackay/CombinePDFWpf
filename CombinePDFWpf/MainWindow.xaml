@@ -10,7 +10,8 @@
         ResizeMode="CanMinimize" 
         BorderThickness="0" 
         Loaded="MainForm_Loaded" 
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight" 
+        Icon="combine_pdf.ico">
 
     <Grid Margin="15">
 
@@ -118,7 +119,7 @@
                     Content="Settings" 
                     VerticalAlignment="Top" 
                     Width="144" 
-                    Height="25"/>
+                    Height="25" Click="btnSettings_Click"/>
 
             <Button x:Name="btnMoveDown" 
                     Content="Move Down" 

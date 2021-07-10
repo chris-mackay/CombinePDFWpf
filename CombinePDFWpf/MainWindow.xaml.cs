@@ -244,7 +244,7 @@ namespace CombinePDFWpf
                     }
 
                     frmInput input = new frmInput();
-                    input.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    input.Owner = Application.Current.MainWindow;
                     input.lblPrompt.Content = "Combined file name";
                     input.Title = "Combine PDF";
                     bool? result = input.ShowDialog();
@@ -371,6 +371,17 @@ namespace CombinePDFWpf
                 }
         }
 
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            frmSettings settings = new frmSettings();
+            settings.Owner = Application.Current.MainWindow;
+            bool? result = settings.ShowDialog();
+
+            if((bool)result)
+                txtDirectory.Text = settings.txtDirectory.Text;
+
+        }
+
         #endregion
 
         #region HelperMethods
@@ -401,5 +412,6 @@ namespace CombinePDFWpf
         }
 
         #endregion
+        
     }
 }
