@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CombinePDFWpf"
         mc:Ignorable="d"
         Title="Combine PDF" SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" Icon="combine_pdf.ico">
     
     <Grid Margin="15">
         
