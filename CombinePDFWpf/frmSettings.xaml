@@ -34,9 +34,17 @@
                    Margin="0,0,0,30">
 
             <Label Content="File Directory"></Label>
-            <TextBox x:Name="txtDirectory" Width="300" TextChanged="txtDirectory_TextChanged"></TextBox>
-            <Button x:Name="btnBrowse" Content="Browse"
-                    Width="75" Height="25" Click="btnBrowse_Click"
+            <TextBox x:Name="txtDirectory" 
+                     Width="300" 
+                     Height="25"
+                     VerticalContentAlignment="Center"
+                     TextChanged="txtDirectory_TextChanged">
+            </TextBox>
+            <Button x:Name="btnBrowse" 
+                    Content="Browse"
+                    Width="75" 
+                    Height="25" 
+                    Click="btnBrowse_Click"
                     Margin="10,0,0,0">
             </Button>
 
@@ -49,7 +57,7 @@
             <Label Content="Choose whether you recieve a message that there&#x0a;is already a file with the name that was provided."></Label>
             <Label Content="Checking will not show the message and always&#x0a;overwrite the file."></Label>
             <Label Content="Un-checking will show the confirmation message."></Label>
-            <CheckBox x:Name="ckbAlwaysOverwrite" Content="Always Overwrite?" Margin="0,20,0,0"></CheckBox>
+            <CheckBox x:Name="ckbAlwaysOverwrite" Content="Always Overwrite?" Margin="0,20,0,0" VerticalContentAlignment="Bottom"></CheckBox>
             
         </StackPanel>
 

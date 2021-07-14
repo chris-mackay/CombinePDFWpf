@@ -46,11 +46,12 @@
                 
                 <TextBox x:Name="txtDirectory" 
                          HorizontalAlignment="Left" 
-                         Height="23" 
+                         Height="25" 
                          Margin="10,0,0,0"
                          TextWrapping="Wrap" 
                          Text="" 
-                         VerticalAlignment="Top" 
+                         VerticalAlignment="Top"
+                         VerticalContentAlignment="Center"
                          Width="467" TextChanged="txtDirectory_TextChanged"/>
                 
                 <CheckBox x:Name="ckbDefault" 
@@ -58,6 +59,7 @@
                           HorizontalAlignment="Left" 
                           Margin="10,10,0,0"
                           VerticalAlignment="Top" 
+                          VerticalContentAlignment="Bottom"
                           Width="149" Checked="ckbDefault_Checked"/>
                 
             </StackPanel>
