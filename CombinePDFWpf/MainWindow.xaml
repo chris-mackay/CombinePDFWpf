@@ -6,155 +6,73 @@
         xmlns:local="clr-namespace:CombinePDFWpf"
         mc:Ignorable="d"
         Title="Combine PDF" 
-        WindowStartupLocation="CenterScreen" 
-        ResizeMode="CanMinimize" 
-        BorderThickness="0" 
-        Loaded="MainForm_Loaded" 
-        SizeToContent="WidthAndHeight" 
-        Icon="combine_pdf.ico">
+        SizeToContent="WidthAndHeight"
+        ResizeMode="CanResizeWithGrip"
+        MinWidth="600"
+        MinHeight="600" Loaded="MainForm_Loaded">
 
     <Grid Margin="15">
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        
-        <Label x:Name="lblInstructions" 
-               Content="Specifying a directory will load all PDF files for the directory.&#xD;&#xA;Not including sub-directories." 
-               HorizontalAlignment="Left"
-               Grid.Row="1"
-               VerticalAlignment="Top" 
-               Height="47"
-               Margin="0,0,0,20"/>
 
-        <WrapPanel Grid.Row="2">
-            
-            <Label x:Name="lblDirectory" 
-                   Content="File Directory"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Top"/>
+        <TextBlock Margin="0 10 0 20" Grid.Row="0" Text="Specifying a directory will load all PDF files from the directory.&#x0a;Not including sub-directories"/>
 
-            <StackPanel>
-                
-                <TextBox x:Name="txtDirectory" 
-                         HorizontalAlignment="Left" 
-                         Height="25" 
-                         Margin="10,0,0,0"
-                         TextWrapping="Wrap" 
-                         Text="" 
-                         VerticalAlignment="Top"
-                         VerticalContentAlignment="Center"
-                         Width="467" TextChanged="txtDirectory_TextChanged"/>
-                
-                <CheckBox x:Name="ckbDefault" 
-                          Content="Set directory as default" 
-                          HorizontalAlignment="Left" 
-                          Margin="10,10,0,0"
-                          VerticalAlignment="Top" 
-                          VerticalContentAlignment="Bottom"
-                          Width="149" Checked="ckbDefault_Checked"/>
-                
-            </StackPanel>
-            
-            <Button x:Name="btnBrowse" 
-                Content="Browse" 
-                VerticalAlignment="Top" 
-                Margin="10,0,0,0"
-                Width="75" 
-                Height="25" 
-                Click="btnBrowse_Click"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="75"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        </WrapPanel>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="File Directory"/>
+            <TextBox x:Name="txtDirectory" TextChanged="txtDirectory_TextChanged" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" Height="25" Padding="2"/>
+            <Button x:Name="btnBrowse" Click="btnBrowse_Click" Grid.Column="2" Grid.Row="0" Content="Browse" Margin="10 0 0 0" Height="25"/>
+            <CheckBox x:Name="ckbDefault" Checked="ckbDefault_Checked" Grid.Column="1" Grid.Row="1" Margin="0 10 0 20" Content="Directory is default"/>
 
-        <WrapPanel Grid.Row="3"
-                   Margin="0,20,0,0">
-            
-            <Button x:Name="btnAdd" 
-                    Content="Add File" 
-                    Margin="0,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" Click="btnAdd_Click"/>
-        
-            <Button x:Name="btnRemove" 
-                    Content="Remove File" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" Click="btnRemove_Click"/>
+        </Grid>
 
-            <Button x:Name="btnDelete" 
-                    Content="Delete File" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" Click="btnDelete_Click"/>
-            
-            <Button x:Name="btnRefresh" 
-                    Content="Refresh" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" 
-                    Click="btnRefresh_Click"/>
-            
-        </WrapPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 10">
+            <Button x:Name="btnAddFile" Click="btnAdd_Click" Content="Add File" Width="75" Height="25" Margin="0 0 10 0"/>
+            <Button x:Name="btnRemoveFile" Click="btnRemove_Click" Content="Remove File" Width="75" Height="25" Margin="0 0 10 0"/>
+            <Button x:Name="btnDeleteFile" Click="btnDelete_Click" Content="Delete File" Width="75" Height="25" Margin="0 0 10 0"/>
+            <Button x:Name="btnRefresh" Click="btnRefresh_Click" Content="Refresh" Width="75" Height="25"/>
+        </StackPanel>
 
-        <ListBox x:Name="lstFiles" 
-                 Grid.Row="4"
-                 Margin="0,10,0,0"
-                 Height="500">
-        </ListBox>
+        <ListBox x:Name="lstFiles" Grid.Row="3" Grid.Column="0" Margin="0 0 0 10"></ListBox>
 
-        <WrapPanel Grid.Row="5"
-                   Margin="0,10,0,0">
-            
-            <Button x:Name="btnSettings" 
-                    Content="Settings" 
-                    VerticalAlignment="Top" 
-                    Width="144" 
-                    Height="25" Click="btnSettings_Click"/>
+        <DockPanel Grid.Row="4" Margin="0 0 0 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Button x:Name="btnMoveDown" 
-                    Content="Move Down" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="98" 
-                    Height="25" Click="btnMoveDown_Click"/>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Grid.Column="0">
+                    <Button x:Name="btnSettings" Click="btnSettings_Click" Content="Settings" Width="100" Height="25" Margin="0 0 10 0"/>
+                    <Button x:Name="btnMoveDown" Click="btnMoveDown_Click" Content="Move Down" Width="75" Height="25" Margin="0 0 10 0"/>
+                    <Button x:Name="btnMoveUp" Click="btnMoveUp_Click" Content="Move Up" Width="75" Height="25" Margin="0 0 10 0"/>
+                </StackPanel>
 
-            <Button x:Name="btnMoveUp" 
-                    Content="Move Up"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="98" 
-                    Height="25" Click="btnMoveUp_Click"/>
-            
-        </WrapPanel>
-
-        <WrapPanel Grid.Row="5"
-                   HorizontalAlignment="Right"
-                   Margin="0,10,0,0">
-            
-            <Button x:Name="btnCombine" 
-                    Content="Combine" 
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" Click="btnCombine_Click"/>
-
-            <Button x:Name="btnClose" 
-                    Content="Close" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Height="25" Click="btnClose_Click"/>
-        </WrapPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button x:Name="btnCombine" Click="btnCombine_Click" Content="Combine" Width="75" Height="25" Margin="0 0 10 0"/>
+                    <Button x:Name="btnClose" Click="btnClose_Click" Content="Close" Width="75" Height="25"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>
