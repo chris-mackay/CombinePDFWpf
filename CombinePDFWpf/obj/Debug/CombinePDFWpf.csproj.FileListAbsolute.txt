@@ -10,7 +10,7 @@ C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\Microsoft.WindowsAPICodePac
 C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
 C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.xml
 C:\Programming\CombinePDFWpf\CombinePDFWpf\bin\Debug\XMLSettings.pdb
-C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\CombinePDFWpf.csproj.AssemblyReference.cache
+C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\CombinePDFWpf.csprojAssemblyReference.cache
 C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\frmInput.g.cs
 C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\frmSettings.g.cs
 C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Debug\MainWindow.g.cs
