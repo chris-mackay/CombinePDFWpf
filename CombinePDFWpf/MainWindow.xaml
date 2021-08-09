@@ -9,7 +9,9 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="CanResizeWithGrip"
         MinWidth="600"
-        MinHeight="600" Loaded="MainForm_Loaded">
+        MinHeight="600" 
+        Loaded="MainForm_Loaded" 
+        WindowStartupLocation="CenterScreen">
 
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
