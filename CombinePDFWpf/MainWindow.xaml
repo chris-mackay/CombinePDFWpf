@@ -9,12 +9,8 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="CanResizeWithGrip"
         MinWidth="600"
-<<<<<<< HEAD
         MinHeight="600" 
         Loaded="MainForm_Loaded" 
-=======
-        MinHeight="600" Loaded="MainForm_Loaded" 
->>>>>>> cb6d83537b0409471636e32d055a3df8678e1045
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="15">

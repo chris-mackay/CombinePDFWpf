@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\Release\
+C:\Programming\CombinePDFWpf\CombinePDFWpf\obj\x64\Release\
 CombinePDFWpf
 none
 false
-TRACE
+
 C:\Programming\CombinePDFWpf\CombinePDFWpf\App.xaml
 31319721772
 
-81689005765
+7-1528382699
 19-148105928
 frmInput.xaml;frmSettings.xaml;MainWindow.xaml;
 
-True
+False
 
